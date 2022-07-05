@@ -69,7 +69,7 @@
                 <div class="top-right links">
                     @auth
                     {{-- Temporary link to Admin redirect --}}
-                        <a href="{{ route('index') }}">Admin</a>
+                        <a href="{{ route('admin.index') }}">Admin</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
 
