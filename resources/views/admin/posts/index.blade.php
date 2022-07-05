@@ -14,11 +14,11 @@
                     </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
-
-                    <a href="{{route('admin.posts.index')}}">
-                        All posts
-                    </a>
+                    <ul>
+                        @foreach ($posts as $post)
+                        <li>{{$post->title}}</li>
+                        @endforeach
+                    </ul>
                 </div>
             </div>
         </div>
