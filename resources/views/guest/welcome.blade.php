@@ -68,6 +68,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
+                    {{-- Temporary link to Admin redirect --}}
                         <a href="{{ route('index') }}">Admin</a>
                     @else
                         <a href="{{ route('login') }}">Login</a>
