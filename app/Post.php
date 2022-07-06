@@ -7,14 +7,15 @@ use Illuminate\Support\Str;
 
 class Post extends Model
 {
-    public static function generateSlug($title){
+    public static function generateSlug($title)
+    {
         $slug = Str::slug($title, '-');
         $slug_base = $slug;
 
         $post_present = Post::where('slug', $slug)->first();
         $c = 1;
 
-        while($post_present) {
+        while ($post_present) {
             $slug = $slug_base . '-' . $c;
             $c++;
             $post_present = Post::where('slug', $slug)->first();
@@ -22,4 +23,10 @@ class Post extends Model
 
         return $slug;
     }
+
+    protected $fillable = [
+        'title',
+        'content',
+        'slug',
+    ];
 }

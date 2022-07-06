@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Post;
+use App\Http\Requests\PostsRequest;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Str;
+use App\Post;
 
 class PostsController extends Controller
 {
@@ -28,6 +30,7 @@ class PostsController extends Controller
     public function create()
     {
         //
+        return view('admin.posts.create');
     }
 
     /**
@@ -38,7 +41,15 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $new_post = new Post();
+        $data = $request->all();
+
+        $new_post->fill($data);
+        $new_post->slug = Post::generateSlug($request->title);
+
+        $new_post->save();
+        return redirect()->route('admin.posts.show', $new_post->slug);
     }
 
     /**
@@ -47,9 +58,13 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show(Post $post)
+    public function show($slug)
     {
-        //
+        $post = Post::where("slug", $slug)->first();
+        if ($post) {
+            return view('admin.posts.show', compact("post"));
+        }
+        abort(404, 'Post not found');
     }
 
     /**
@@ -58,9 +73,13 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit(Post $post)
+    public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        if ($post) {
+            return view('admin.posts.edit', compact("post"));
+        }
+        abort(404, 'Post not found');
     }
 
     /**
@@ -70,9 +89,16 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+
+        $post->title = $request->title;
+        $post->content = $request->content;
+        $post->slug = Post::generateSlug($request->title);
+        $post->save();
+
+        return redirect()->route('admin.index');
     }
 
     /**
@@ -81,8 +107,11 @@ class PostsController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Post $post)
+    public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+
+        return redirect()->route('admin.index')->with('message', "Post $post->name was deleted");
     }
 }
