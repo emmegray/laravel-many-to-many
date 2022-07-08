@@ -3,7 +3,6 @@
 @section('content')
 <div class="container">
 
-    {{var_dump($post)}}
 
     <div class="card" style="width: 18rem;">
         <div class="card-body">
