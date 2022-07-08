@@ -16,7 +16,7 @@
 
                     <ul>
                         @foreach ($posts as $post)
-                        <li>{{$post->title}}</li>
+                        <li>{{$post->title}} {{$post->category ? $post->category->name: 'No category'}}</li>
                         @endforeach
                     </ul>
                 </div>
