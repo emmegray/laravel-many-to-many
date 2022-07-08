@@ -9,6 +9,15 @@
             <h4 class="card-title">{{ $post->title }}</h4>
             <p class="card-text">{{ $post->content}}</p>
             <h5 class="card-title">{{$post->category ? $post->category->name:'No category for this post'}}</h5>
+
+            <div class="d-flex flex-row-reverse">
+                <a class="btn btn-outline-secondary mx-2" href="{{route('admin.posts.edit', $post)}}">Edit</a>
+                <form action="{{ route('admin.posts.destroy', $post) }}" method="POST" onsubmit="return confirm('Are you sure?')">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-outline-danger d-line" type="submit">Delete</button>
+                </form>
+            </div>
         </div>
     </div>
 

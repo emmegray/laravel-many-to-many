@@ -20,6 +20,19 @@
             <p class="text-danger">{{$message}}</p>
             @enderror
         </div>
+        <div class="mb-3">
+            <select name="category_id" id="category_id" class="form-select">
+                <option value="" {{old('category_id', $post->category->id) == null ? 'selected' : ''}}> Category</option>
+                @foreach ($categories as $category)
+                <option value="" {{old('category_id', $post->category ? $post->category->id : '') == $category->id ? 'selected' : ''}}>
+                    {{$category->name}}
+                </option>
+                @endforeach
+            </select>
+            @error('content')
+            <p class="text-danger">{{$message}}</p>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
