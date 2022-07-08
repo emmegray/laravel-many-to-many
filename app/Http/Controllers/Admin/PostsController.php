@@ -18,7 +18,6 @@ class PostsController extends Controller
     {
         //
         $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
         $categories = Category::all();
         return view('admin.posts.index', compact('posts', 'categories'));
     }
@@ -31,7 +30,6 @@ class PostsController extends Controller
     public function create()
     {
         //
-        return view('admin.posts.create');
         $categories = Category::all();
         return view('admin.posts.create', compact('categories'));
     }
@@ -65,12 +63,10 @@ class PostsController extends Controller
     {
         $post = Post::where("slug", $slug)->first();
         if ($post) {
-            return view('admin.posts.show', compact("post"));
+            $categories = Category::all();
+            return view('admin.posts.show', compact('post', 'categories'));
         }
         abort(404, 'Post not found');
-
-        $categories = Category::all();
-        return view('admin.posts.show', compact('post', 'categories'));
     }
 
     /**
@@ -83,12 +79,10 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
         if ($post) {
-            return view('admin.posts.edit', compact("post"));
+            $categories = Category::all();
+            return view('admin.posts.edit', compact('post', 'categories'));
         }
         abort(404, 'Post not found');
-
-        $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**

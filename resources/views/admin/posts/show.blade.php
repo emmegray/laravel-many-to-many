@@ -3,6 +3,8 @@
 @section('content')
 <div class="container">
 
+    {{var_dump($post)}}
+
     <div class="card" style="width: 18rem;">
         <div class="card-body">
             <h4 class="card-title">{{ $post->title }}</h4>
