@@ -97,11 +97,12 @@ class PostsController extends Controller
         $post = Post::find($id);
 
         $post->title = $request->title;
+        $post->category_id = $request->category_id;
         $post->content = $request->content;
         $post->slug = Post::generateSlug($request->title);
         $post->save();
 
-        return redirect()->route('admin.index');
+        return redirect()->route('admin.posts.show', $post->slug);
     }
 
     /**

@@ -22,9 +22,14 @@
         </div>
         <div class="mb-3">
             <select name="category_id" id="category_id" class="form-select">
-                <option value="" {{old('category_id', $post->category->id) == null ? 'selected' : ''}}> Category</option>
+                @if ($post->category)
+                <option value="">Category</option>
+                @else
+                <option value="" selected>Category</option>
+                @endif
+
                 @foreach ($categories as $category)
-                <option value="" {{old('category_id', $post->category ? $post->category->id : '') == $category->id ? 'selected' : ''}}>
+                <option value="{{$category->id}}" {{old('category_id', $post->category ? $post->category->id : '') == $category->id ? 'selected' : ''}}>
                     {{$category->name}}
                 </option>
                 @endforeach
