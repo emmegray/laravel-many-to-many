@@ -38,6 +38,23 @@
             <p class="text-danger">{{$message}}</p>
             @enderror
         </div>
+
+        <div class="mb-3">
+            @foreach ($tags as $tag)
+                <label for="tag-{{$tag->slug}}">
+                    <span>{{$tag->name}}</span>
+                    <input
+                        type="checkbox"
+                        name="tags[]"
+                        id="tag-{{$tag->slug}}"
+                        value="{{$tag->id}}"
+                        @if ($post->tags->contains($tag->id))
+                            checked
+                        @endif
+                    />
+                </label>
+            @endforeach
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

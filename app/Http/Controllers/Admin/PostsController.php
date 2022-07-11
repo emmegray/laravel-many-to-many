@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PostRequest;
 use App\Post;
 use App\Category;
 use App\Tag;
@@ -48,6 +49,10 @@ class PostsController extends Controller
 
         $new_post = new Post();
         $data = $request->all();
+
+        if (array_key_exists('tags', $data)) {
+            $new_post->tags()->attach($data['tags']);
+        }
 
         $new_post->fill($data);
         $new_post->slug = Post::generateSlug($request->title);
@@ -100,12 +105,17 @@ class PostsController extends Controller
     public function update(Request $request, $id)
     {
         $post = Post::find($id);
+        $data = $request->all();
 
-        $post->title = $request->title;
-        $post->category_id = $request->category_id;
-        $post->content = $request->content;
-        $post->slug = Post::generateSlug($request->title);
-        $post->save();
+        if($data['title'] != $post->title){
+            $data['slug'] = Post::generateSlug($data['title']);
+        }
+
+        $post->update($data);
+
+        if(array_key_exists('tags', $data)){
+            $post->tags()->sync($data['tags']);
+        }
 
         return redirect()->route('admin.posts.show', $post->slug);
     }
