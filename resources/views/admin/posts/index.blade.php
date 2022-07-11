@@ -16,9 +16,13 @@
 
                     <ul>
                         @foreach ($posts as $post)
-                        <li>{{$post->title}} {{$post->category ? $post->category->name: 'No category'}}</li>
+                        <li>
+                            {{$post->title}}{{$post->category ? $post->category->name: 'No category'}}
+                            {{$post->title}}{{$post->tags ? $post->tags->name: 'No tags'}}
+                        </li>
                         @endforeach
                     </ul>
+
                 </div>
             </div>
         </div>
