@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostsController extends Controller
 {
@@ -19,7 +20,8 @@ class PostsController extends Controller
         //
         $posts = Post::all();
         $categories = Category::all();
-        return view('admin.posts.index', compact('posts', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.index', compact('posts', 'categories', 'tags'));
     }
 
     /**
@@ -31,7 +33,8 @@ class PostsController extends Controller
     {
         //
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -64,7 +67,8 @@ class PostsController extends Controller
         $post = Post::where("slug", $slug)->first();
         if ($post) {
             $categories = Category::all();
-            return view('admin.posts.show', compact('post', 'categories'));
+            $tags = Tag::all();
+            return view('admin.posts.show', compact('post', 'categories', 'tags'));
         }
         abort(404, 'Post not found');
     }
@@ -80,7 +84,8 @@ class PostsController extends Controller
         $post = Post::find($id);
         if ($post) {
             $categories = Category::all();
-            return view('admin.posts.edit', compact('post', 'categories'));
+            $tags = Tag::all();
+            return view('admin.posts.edit', compact('post', 'categories', 'tags'));
         }
         abort(404, 'Post not found');
     }
